@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>elektroban</title>
+<meta name="description" content="Oddaj presežke in zasluži, brez vstopnih stroškov.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23ff8c1a'/%3E%3Cpath d='M13 2L3 14H12L11 22L21 10H12L13 2Z' fill='%23160d05'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0704;
+    --amber-1:#ffc069;
+    --amber-2:#ff8c1a;
+    --amber-3:#c4590a;
+    --text:#f7f1e8;
+    --text-muted:#a5937c;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{height:100%;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Chakra Petch',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--amber-1);
+    outline-offset:3px;
+  }
+
+  /* ---------- background ---------- */
+  .bg-fixed{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 900px 560px at 50% 0%, rgba(255,140,26,0.34), transparent 68%),
+      radial-gradient(ellipse 700px 420px at 85% 12%, rgba(255,140,26,0.12), transparent 70%),
+      linear-gradient(rgba(255,140,26,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,140,26,0.05) 1px, transparent 1px),
+      var(--bg);
+    background-size:auto,auto,42px 42px,42px 42px,auto;
+  }
+  .bg-fixed::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse 1200px 800px at 50% 0%, transparent 40%, var(--bg) 92%);
+  }
+
+  /* ---------- header ---------- */
+  header.site{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:10;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:24px 28px;
+  }
+
+  .mark{
+    display:flex;
+    line-height:0;
+    border-radius:6px;
+  }
+  .mark svg{display:block;}
+
+  .contact-wrap{
+    position:relative;
+    display:inline-flex;
+  }
+
+  .contact-btn{
+    background:transparent;
+    border:1.5px solid rgba(255,166,64,0.4);
+    color:var(--amber-1);
+    font-family:inherit;
+    font-weight:600;
+    font-size:0.8rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:0.62rem 1.3rem;
+    border-radius:5px;
+    cursor:pointer;
+    transition:background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .contact-btn:hover,
+  .contact-btn:focus-visible{
+    background:var(--amber-2);
+    color:#170d04;
+    border-color:var(--amber-2);
+  }
+
+  .tooltip{
+    position:absolute;
+    top:calc(100% + 10px);
+    right:0;
+    background:#140d06;
+    border:1px solid rgba(255,166,64,0.35);
+    color:var(--amber-1);
+    font-size:0.68rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:6px 11px;
+    border-radius:4px;
+    white-space:nowrap;
+    opacity:0;
+    transform:translateY(-4px);
+    pointer-events:none;
+    transition:opacity .16s ease, transform .16s ease;
+  }
+  .tooltip::before{
+    content:"";
+    position:absolute;
+    top:-5px;right:16px;
+    width:8px;height:8px;
+    background:#140d06;
+    border-left:1px solid rgba(255,166,64,.35);
+    border-top:1px solid rgba(255,166,64,.35);
+    transform:rotate(45deg);
+  }
+  .contact-wrap:hover .tooltip,
+  .contact-btn:focus-visible ~ .tooltip{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    z-index:1;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 24px 60px;
+  }
+
+  h1{
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:clamp(2.1rem, 7vw, 4.6rem);
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    text-shadow:0 0 60px rgba(255,140,26,0.35);
+  }
+  h1 .accent{
+    display:block;
+    background:linear-gradient(100deg, var(--amber-1), var(--amber-2) 55%, var(--amber-3));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .sub{
+    margin-top:22px;
+    font-size:clamp(0.8rem, 2vw, 1rem);
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    font-weight:500;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-fixed" aria-hidden="true"></div>
+
+<header class="site">
+  <a href="#" class="mark" aria-label="elektroban">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+      <rect width="24" height="24" rx="5" fill="url(#boltGrad)"/>
+      <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#160d05"/>
+      <defs>
+        <linearGradient id="boltGrad" x1="0" y1="0" x2="24" y2="24">
+          <stop offset="0%" stop-color="#ffc069"/>
+          <stop offset="100%" stop-color="#ff8c1a"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </a>
+
+  <div class="contact-wrap">
+    <button class="contact-btn" aria-describedby="contactTip">Kontakt</button>
+    <span class="tooltip" id="contactTip" role="tooltip">generični kontakt</span>
+  </div>
+</header>
+
+<main class="hero">
+  <h1>Oddaj presežke<span class="accent">in zasluži</span></h1>
+  <p class="sub">brez vstopnih stroškov</p>
+</main>
+
+</body>
+</html>
